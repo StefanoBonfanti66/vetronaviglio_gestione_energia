@@ -17,12 +17,13 @@ Pipeline Python (pandas/openpyxl) che unisce dati IcoPower (kWh per macchina), P
   - Foglio 12: tabella oraria statistiche
   - Foglio 13: tabelle orarie per mese
   - Foglio 14: **Analisi efficienza** (NUOVO)
-- **Foglio Analisi efficienza** contenente:
+- **Analisi efficienza (foglio 14)** contenente:
   - Profilo notte/giorno 2025 vs 2026 (tabella mensile da ICO-F500)
   - Impatto 3 turni: extra notte ≈ +17.785 kWh / ~€5.300
   - Idle analysis per macchina (GEN-SET 2026): F04 25% idle, TROV 32% idle (top 2)
   - Raccomandazioni prioritarie per Direttore di Produzione
-- **Report Direttore di Produzione**: `report_direttore_produzione.md` — sintesi esecutiva con quadro energetico, tabella idle, 5 azioni prioritarie con risparmio/CAPEX/payback
+- **Mancata trasmissione contatori 2026**: MG5/MG8 (fermi dal 14/05/2026) e MG6 (dall'11/05/2026) risultano in produzione per censimento ma kWh SOTTOSTIMATI (contatore non aggiorna). Marcati "dato incompleto: contatore fermo dal 14/05/2026 (macchina in produzione)" in Confronto/Sintesi 2026 e bullet 12 nelle Note di lettura. Report sezione 4 "Rilevazioni contatori da verificare" con punto di misura IcoPower esatto e ultima lettura valida per ciascuna — MG6 priorità (133,5 h a settembre, macchina più attiva dell'area).
+- **Report Direttore di Produzione**: `report_direttore_produzione.md` — sintesi esecutiva con quadro energetico, tabella idle, sezione 4 "Rilevazioni contatori da verificare" (punti di misura IcoPower blocatti), 5 azioni prioritarie con risparmio/CAPEX/payback
 - **Bug idle corretto**: computazione ora replica `_analisi_efficienza.py` (kWh = diff contatori cumulativi, potenza kW = kWh/dt_h, soglie su p99 kW, load factor corretto)
 
 ### In corso / Da chiudere

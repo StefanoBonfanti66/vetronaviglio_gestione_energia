@@ -16,11 +16,38 @@ fonti: rendiconto_2025_2026.xlsx (foglio Analisi efficienza + Tabelle), fatture 
 | kWh ENEL fatturati | 500.743 | 396.200 | — |
 | Costo ENEL totale | ~€146.000 | ~€123.000 | — |
 
-**Copertura contatori**: i contatori macchina misurano circa **il 18%** del totale ENEL. L'82% restante è: aria compressa, illuminazione, HVAC, trattamento acque, servizi generali.
+**Copertura contatori**: i contatori montati a monte delle singole macchine misurano circa **il 23%** del consumi fatturati (72.467 kWh su ~313.000 del contatore generale). Il resto non è attribuibile a "servizi": è quasi tutto consumo che transita dal contatore generale durante le ore di produzione (vedi sezione 2).
 
 ---
 
-## 2. Impatto dei 3 turni (giugno-agosto 2026)
+## 2. Profilo giorno vs notte — dove va il consumo non attribuito
+
+L'analisi del contatore generale ICO-F500 conferma che i contatori singoli (a monte macchina) non includono servizi: la verifica **giorno vs notte** mostra dove finisce il resto.
+
+| Fascia (mediana kW) | 2025 (GEN-NOV) | 2026 (GEN-SET) |
+|---------------------|---------------|----------------|
+| Notte feriale profonda (23-04) | 5,2 kW | 5,4 kW |
+| Giorno feriale (06-22) | 104,0 kW | 94,8 kW |
+| Weekend | 4,6 kW | 4,6 kW |
+| Rapporto giorno/notte | 20× | 18× |
+
+**Energia per fascia — 2026 (contatore generale, totale 313.144 kWh):**
+- NOTTE (22-06): **36.952 kWh (11,8%)** — nel 2025 era il 4,5% (18.020 kWh): la differenza è l'effetto dei 3 turni.
+- GIORNO (06-22): **276.193 kWh (88,2%)** — di cui weekend solo 8.319 kWh (produzione ferma, resta solo la baseline servizi).
+
+**Decomposizione 2026 del contatore generale (313.144 kWh):**
+
+| Componente | kWh | % |
+|-----------|-----|---|
+| Baseline servizi sempre-on (@ ~5,4 kW) | ≈ 32.140 | ≈ 10,3% |
+| Macchine misurate (sotto-contatori singoli) | 72.467 | 23,2% |
+| Residuo diurno (produzione non sotto-misurata + servizi variabili) | ≈ 208.537 | ≈ 66,6% |
+
+**Lettura**: la baseline notturna di ~5 kW (illuminazione, HVAC, pompe, servizi minimi) pesa solo ~10%. Il grosso del consumo si concentra di **giorno, quando le macchine lavorano** — il residuo di ~67% è produzione che transita dal contatore generale senza sotto-contatore dedicato (per esempio aria compressa, refrigerazione/chiller) più servizi che seguono l'attività, NON sprechi fissi. Il benchmark settoriale (aria compressa ~10-11% del consumo elettrico industriale, illuminazione/HVAC 15-30%) colloca Vetronaviglio nella norma, anzi sotto per la baseline notturna.
+
+---
+
+## 3. Impatto dei 3 turni (giugno-agosto 2026)
 
 | Periodo | Notte feriali kWh | Notti | Media kWh/notte |
 |---------|------------------|-------|----------------|
@@ -34,7 +61,7 @@ Il consumo notturno dei feriali è passato da ~70 kWh/notte a ~388 kWh/notte dur
 
 ---
 
-## 3. Macchine con maggiore consumo idle
+## 4. Macchine con maggiore consumo idle
 
 L'analisi idle (kWh con potenza tra 5% e 25% del p99) sul periodo GEN-SET 2026, contatore generale:
 
@@ -53,7 +80,21 @@ L'analisi idle (kWh con potenza tra 5% e 25% del p99) sul periodo GEN-SET 2026, 
 
 ---
 
-## 4. Raccomandazioni prioritarie
+## 5. Rilevazioni contatori da verificare
+
+Censimento area soffiaggio/iniezione (7 macchine: MG7, MP2, MG5, MG8, MG6, F02, F04). Quattro contatori della lista sono aggiornati; **tre risultano in produzione ma con trasmissione contatore interrotta** — i kWh 2026 di queste macchine sono sottostimati (dato fermo a maggio). Punti di misura esatti dove intervenire:
+
+| Macchina | Punto di misura IcoPower | Ultima lettura valida | Valore cumulativo | Ore sett. 2026 | kWh 2026 (parz.) |
+|----------|--------------------------|----------------------|-------------------|----------------|------------------|
+| **MG5** | `Vetronaviglio.MG5#Energia attiva nel carico#kWh` | 14/05/2026 10:50 | 32.825,4 kWh | 47,0 | 1.683,5 |
+| **MG8** | `Vetronaviglio.MG8#Energia attiva nel carico#kWh` | 14/05/2026 09:30 | 10.641,0 kWh | 20,4 | 2.648,6 |
+| **MG6** | `Vetronaviglio.MG6#Energia attiva nel carico#kWh` | 11/05/2026 04:30 | 27.136,6 kWh | 133,5 | 6.966,1 |
+
+**Intervento richiesto**: verificare rilevatore/trasmissione dei 3 contatori (cavo, alimentazione, concentratore). MG6 è la priorità — a settembre è la macchina più attiva dell'area (133,5 h). Ore e pezzi restano validi (fonti ProdWare), solo il consumo kWh è mancante da metà maggio.
+
+---
+
+## 6. Raccomandazioni prioritarie
 
 ### Azione 1 — Spegnimento macchine inattive (idle)
 - **Azione**: spegnere F04 e TROV durante i turni di pausa/notte senza commesse pendenti.
@@ -68,7 +109,7 @@ L'analisi idle (kWh con potenza tra 5% e 25% del p99) sul periodo GEN-SET 2026, 
 - **Payback**: 2-3 anni.
 
 ### Azione 3 — Sotto-contatori quadri generali
-- **Azione**: installare sotto-contatori ifm SD su quadri generali (alimentazioni, HVAC, illuminazione) per mappare il restante 82% dei kWh.
+- **Azione**: installare sotto-contatori ifm SD sui quadri generali (alimentazioni, aria compressa, HVAC, illuminazione) per mappare il residuo non sotto-misurato (~67-77% del contatore generale, vedi sezione 2).
 - **Risparmio**: non diretto; abilita tutte le successive ottimizzazioni con dati reali.
 - **Costo**: ~€5.000 per 10-15 sensori.
 - **Payback**: <1 anno grazie al rilevamento di sprechi nascosti.
@@ -86,7 +127,7 @@ L'analisi idle (kWh con potenza tra 5% e 25% del p99) sul periodo GEN-SET 2026, 
 
 ---
 
-## 5. Riepilogo finanziario
+## 7. Riepilogo finanziario
 
 | Azione | Risparmio annuo stimato | CAPEX | Payback |
 |--------|------------------------|-------|---------|
@@ -99,11 +140,11 @@ L'analisi idle (kWh con potenza tra 5% e 25% del p99) sul periodo GEN-SET 2026, 
 
 ---
 
-## 6. Prossimi passi suggeriti
+## 8. Prossimi passi suggeriti
 
 1. **Settimana 1-2**: audit aria compressa (contattare fornitore ultrasuoni o specialista).
 2. **Settimana 1**:Procedure di spegnimento F04/TROV a fine turno — formare gli addetti.
-3. **Mese 1**: installare 5-10 sotto-contatori su quadri generali per mappare il 82% non misurato.
+3. **Mese 1**: installare 5-10 sotto-contatori su quadri generali per mappare il residuo non sotto-misurato.
 4. **Mese 2-3**: avviare iter per FV (visita tecnica, studio di fattibilità, domanda Transizione 5.0).
 5. **Prossima revisione**: confrontare effetti interventi aria compressa dopo 3 mesi di raccolta dati.
 

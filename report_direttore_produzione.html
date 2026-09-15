@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>report_direttore_produzione</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+
+  <style>
+  body{font-family:'Segoe UI',Arial,sans-serif;margin:1.5cm;font-size:11pt;color:#1a1a2e;line-height:1.5;}
+  h1,h2,h3{color:#0d2b5e;font-family:'Segoe UI',Arial,sans-serif;}
+  h1{font-size:18pt;border-bottom:3px solid #0d2b5e;padding-bottom:6px;}
+  h2{font-size:14pt;border-bottom:2px solid #c9d6ee;padding-bottom:3px;margin-top:24px;}
+  h3{font-size:12pt;color:#1a3e7c;}
+  table{border-collapse:collapse;width:100%;font-size:10pt;}
+  th,td{border:1px solid #b9c6e0;padding:5px 8px;text-align:left;}
+  th{background:#0d2b5e;color:#fff;}
+  tr:nth-child(even){background:#f2f6fc;}
+  code{background:#eef2fa;padding:1px 4px;border-radius:3px;color:#0d2b5e;}
+  blockquote{border-left:4px solid #0d2b5e;margin-left:0;padding:4px 14px;background:#f2f6fc;}
+  hr{border:none;border-top:2px solid #c9d6ee;}
+  @media print{body{margin:1.2cm;}h2{page-break-after:avoid;}table{page-break-inside:auto;}tr{page-break-inside:avoid;}}
+  </style>
+</head>
+<body>
+<h1 id="report-efficienza-energetica--vetronaviglio">Report efficienza
+energetica — Vetronaviglio</h1>
+<h2 id="1-quadro-generale">1. Quadro generale</h2>
+<table>
+<thead>
+<tr>
+<th>Voce</th>
+<th>2025 (GEN-NOV)</th>
+<th>2026 (GEN-SET)</th>
+<th>Var. %</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kWh contatori macchine</td>
+<td>147.103</td>
+<td>72.467</td>
+<td>— (11 vs 9 mesi)</td>
+</tr>
+<tr>
+<td>kWh ENEL fatturati</td>
+<td>500.743</td>
+<td>396.200</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Costo ENEL totale</td>
+<td>~€146.000</td>
+<td>~€123.000</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Copertura contatori</strong>: i contatori montati a monte
+delle singole macchine misurano circa <strong>il 23%</strong> del
+consumi fatturati (72.467 kWh su ~313.000 del contatore generale). Il
+resto non è attribuibile a "servizi": è quasi tutto consumo che transita
+dal contatore generale durante le ore di produzione (vedi sezione
+2).</p>
+<hr />
+<h2 id="2-profilo-giorno-vs-notte--dove-va-il-consumo-non-attribuito">2.
+Profilo giorno vs notte — dove va il consumo non attribuito</h2>
+<p>L'analisi del contatore generale ICO-F500 conferma che i contatori
+singoli (a monte macchina) non includono servizi: la verifica
+<strong>giorno vs notte</strong> mostra dove finisce il resto.</p>
+<table>
+<thead>
+<tr>
+<th>Fascia (mediana kW)</th>
+<th>2025 (GEN-NOV)</th>
+<th>2026 (GEN-SET)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Notte feriale profonda (23-04)</td>
+<td>5,2 kW</td>
+<td>5,4 kW</td>
+</tr>
+<tr>
+<td>Giorno feriale (06-22)</td>
+<td>104,0 kW</td>
+<td>94,8 kW</td>
+</tr>
+<tr>
+<td>Weekend</td>
+<td>4,6 kW</td>
+<td>4,6 kW</td>
+</tr>
+<tr>
+<td>Rapporto giorno/notte</td>
+<td>20×</td>
+<td>18×</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Energia per fascia — 2026 (contatore generale, totale 313.144
+kWh):</strong></p>
+<ul>
+<li>NOTTE (22-06): <strong>36.952 kWh (11,8%)</strong> — nel 2025 era il
+4,5% (18.020 kWh): la differenza è l'effetto dei 3 turni.</li>
+<li>GIORNO (06-22): <strong>276.193 kWh (88,2%)</strong> — di cui
+weekend solo 8.319 kWh (produzione ferma, resta solo la baseline
+servizi).</li>
+</ul>
+<p><strong>Decomposizione 2026 del contatore generale (313.144
+kWh):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Componente</th>
+<th>kWh</th>
+<th>%</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Baseline servizi sempre-on (@ ~5,4 kW)</td>
+<td>≈ 32.140</td>
+<td>≈ 10,3%</td>
+</tr>
+<tr>
+<td>Macchine misurate (sotto-contatori singoli)</td>
+<td>72.467</td>
+<td>23,2%</td>
+</tr>
+<tr>
+<td>Residuo diurno (produzione non sotto-misurata + servizi
+variabili)</td>
+<td>≈ 208.537</td>
+<td>≈ 66,6%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lettura</strong>: la baseline notturna di ~5 kW
+(illuminazione, HVAC, pompe, servizi minimi) pesa solo ~10%. Il grosso
+del consumo si concentra di <strong>giorno, quando le macchine
+lavorano</strong> — il residuo di ~67% è produzione che transita dal
+contatore generale senza sotto-contatore dedicato (per esempio aria
+compressa, refrigerazione/chiller) più servizi che seguono l'attività,
+NON sprechi fissi. Il benchmark settoriale (aria compressa ~10-11% del
+consumo elettrico industriale, illuminazione/HVAC 15-30%) colloca
+Vetronaviglio nella norma, anzi sotto per la baseline notturna.</p>
+<hr />
+<h2 id="3-impatto-dei-3-turni-giugno-agosto-2026">3. Impatto dei 3 turni
+(giugno-agosto 2026)</h2>
+<table>
+<thead>
+<tr>
+<th>Periodo</th>
+<th>Notte feriali kWh</th>
+<th>Notti</th>
+<th>Media kWh/notte</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pre-3turni (GEN-GIUG)</td>
+<td>8.940</td>
+<td>127</td>
+<td>70</td>
+</tr>
+<tr>
+<td>3-turni (29/06-14/09)</td>
+<td>21.727</td>
+<td>56</td>
+<td>388</td>
+</tr>
+<tr>
+<td><strong>Extra notte vs baseline</strong></td>
+<td><strong>+17.785 kWh</strong></td>
+<td></td>
+<td>≈ <strong>€5.300</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Il consumo notturno dei feriali è passato da ~70 kWh/notte a ~388
+kWh/notte durante i 3 turni. Da settembre si è tornati al regime 1 turno
+e i consumi notturni sono tornati ai livelli di baseline (~37-39
+kWh/notte).</p>
+<p><strong>Implicazione</strong>: il picco di LUG-AGO 2026 non è
+un'anomalia dei contatori — è il costo reale della produzione h24 e si
+ripeterà ogni anno se la produzione proseguirà su 3 turni.</p>
+<hr />
+<h2 id="4-macchine-con-maggiore-consumo-idle">4. Macchine con maggiore
+consumo idle</h2>
+<p>L'analisi idle (kWh con potenza tra 5% e 25% del p99) sul periodo
+GEN-SET 2026, contatore generale:</p>
+<table>
+<thead>
+<tr>
+<th>Macchina</th>
+<th>kWh totale</th>
+<th>kWh idle</th>
+<th>% idle</th>
+<th>Ore idle</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>F04</strong></td>
+<td>4.609</td>
+<td><strong>1.150</strong></td>
+<td><strong>25%</strong></td>
+<td>2.864</td>
+<td>Macchina più dissipativa: tensione continua ma carichi minimi</td>
+</tr>
+<tr>
+<td><strong>TROV</strong></td>
+<td>1.850</td>
+<td><strong>593</strong></td>
+<td><strong>32%</strong></td>
+<td>869</td>
+<td>Più alta percentuale idle del parco</td>
+</tr>
+<tr>
+<td>MG7</td>
+<td>7.412</td>
+<td>523</td>
+<td>7%</td>
+<td>1.122</td>
+<td>Ottimizzazione setpoint possibili</td>
+</tr>
+<tr>
+<td>F02</td>
+<td>8.753</td>
+<td>490</td>
+<td>6%</td>
+<td>319</td>
+<td>—</td>
+</tr>
+<tr>
+<td>MG6</td>
+<td>6.950</td>
+<td>399</td>
+<td>6%</td>
+<td>242</td>
+<td>—</td>
+</tr>
+<tr>
+<td>F05</td>
+<td>3.254</td>
+<td>329</td>
+<td>10%</td>
+<td>157</td>
+<td>—</td>
+</tr>
+<tr>
+<td>MP2</td>
+<td>13.418</td>
+<td>320</td>
+<td>2%</td>
+<td>195</td>
+<td>Alto consumo totale ma basso % idle</td>
+</tr>
+<tr>
+<td>MMAN</td>
+<td>3.377</td>
+<td>104</td>
+<td>3%</td>
+<td>782</td>
+<td>Ore attive molte, consumi bassi</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Idle totale parco</strong>: ~4.391 kWh/anno (~6,1% del totale
+parco) ≈ <strong>€1.300/anno</strong> a zero CAPEX.</p>
+<hr />
+<h2 id="5-rilevazioni-contatori-da-verificare">5. Rilevazioni contatori
+da verificare</h2>
+<p>Censimento area soffiaggio/iniezione (7 macchine: MG7, MP2, MG5, MG8,
+MG6, F02, F04). Quattro contatori della lista sono aggiornati;
+<strong>tre risultano in produzione ma con trasmissione contatore
+interrotta</strong> — i kWh 2026 di queste macchine sono sottostimati
+(dato fermo a maggio). Punti di misura esatti dove intervenire:</p>
+<table>
+<thead>
+<tr>
+<th>Macchina</th>
+<th>Punto di misura IcoPower</th>
+<th>Ultima lettura valida</th>
+<th>Valore cumulativo</th>
+<th>Ore sett. 2026</th>
+<th>kWh 2026 (parz.)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MG5</strong></td>
+<td><code>Vetronaviglio.MG5#Energia attiva nel carico#kWh</code></td>
+<td>14/05/2026 10:50</td>
+<td>32.825,4 kWh</td>
+<td>47,0</td>
+<td>1.683,5</td>
+</tr>
+<tr>
+<td><strong>MG8</strong></td>
+<td><code>Vetronaviglio.MG8#Energia attiva nel carico#kWh</code></td>
+<td>14/05/2026 09:30</td>
+<td>10.641,0 kWh</td>
+<td>20,4</td>
+<td>2.648,6</td>
+</tr>
+<tr>
+<td><strong>MG6</strong></td>
+<td><code>Vetronaviglio.MG6#Energia attiva nel carico#kWh</code></td>
+<td>11/05/2026 04:30</td>
+<td>27.136,6 kWh</td>
+<td>133,5</td>
+<td>6.966,1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Intervento richiesto</strong>: verificare
+rilevatore/trasmissione dei 3 contatori (cavo, alimentazione,
+concentratore). MG6 è la priorità — a settembre è la macchina più attiva
+dell'area (133,5 h). Ore e pezzi restano validi (fonti ProdWare), solo
+il consumo kWh è mancante da metà maggio.</p>
+<hr />
+<h2 id="6-raccomandazioni-prioritarie">6. Raccomandazioni
+prioritarie</h2>
+<h3 id="azione-1--spegnimento-macchine-inattive-idle">Azione 1 —
+Spegnimento macchine inattive (idle)</h3>
+<ul>
+<li><strong>Azione</strong>: spegnere F04 e TROV durante i turni di
+pausa/notte senza commesse pendenti.</li>
+<li><strong>Risparmio</strong>: ~1.743 kWh/anno ≈ €520/anno.</li>
+<li><strong>Costo</strong>: €0 — solo disciplina operativa.</li>
+<li><strong>Payback</strong>: immediato.</li>
+</ul>
+<h3 id="azione-2--aria-compressa-audit-perdite">Azione 2 — Aria
+compressa: audit perdite</h3>
+<ul>
+<li><strong>Azione</strong>: audit sistematico perdite in rete (valvole,
+giunzioni, couplings) con ultrasuoni; riparare perdite &gt;80% a valle
+dei riduttori.</li>
+<li><strong>Risparmio</strong>: fino al 30% del consumo aria compressa,
+stimato 15-20% sul totale kWh ENEL ≈ €15.000-25.000/anno.</li>
+<li><strong>Costo</strong>: €14.000-18.000 (valvole di riduzione,
+materiali).</li>
+<li><strong>Payback</strong>: 2-3 anni.</li>
+</ul>
+<h3 id="azione-3--sotto-contatori-quadri-generali">Azione 3 —
+Sotto-contatori quadri generali</h3>
+<ul>
+<li><strong>Azione</strong>: installare sotto-contatori ifm SD sui
+quadri generali (alimentazioni, aria compressa, HVAC, illuminazione) per
+mappare il residuo non sotto-misurato (~67-77% del contatore generale,
+vedi sezione 2).</li>
+<li><strong>Risparmio</strong>: non diretto; abilita tutte le successive
+ottimizzazioni con dati reali.</li>
+<li><strong>Costo</strong>: ~€5.000 per 10-15 sensori.</li>
+<li><strong>Payback</strong>: &lt;1 anno grazie al rilevamento di
+sprechi nascosti.</li>
+</ul>
+<h3 id="azione-4--fotovoltaico-industriale-250-500-kwp">Azione 4 —
+Fotovoltaico industriale 250-500 kWp</h3>
+<ul>
+<li><strong>Azione</strong>: installare FV su copertura capannoni;
+autoconsumo diretto 75-85%.</li>
+<li><strong>Risparmio</strong>: 50-70% del consumo annuo,
+€25.000-40.000/anno con Transizione 5.0.</li>
+<li><strong>Costo</strong>: €150.000-210.000 (dopo credito 40-45%
+Transizione 5.0).</li>
+<li><strong>Payback</strong>: 4-6 anni (2-3 con tax credit
+industriale).</li>
+</ul>
+<h3 id="azione-5--hvacchiller-ottimizzazione-setpoint">Azione 5 —
+HVAC/chiller: ottimizzazione setpoint</h3>
+<ul>
+<li><strong>Azione</strong>: alzare setpoint estivo di 1-2°C,
+programmare spegnimento notturno/weekend.</li>
+<li><strong>Risparmio</strong>: -8-12% consumo HVAC, -3-4% per °C di
+correzione.</li>
+<li><strong>Costo</strong>: €0 — solo regolazione parametri
+impianto.</li>
+</ul>
+<hr />
+<h2 id="7-riepilogo-finanziario">7. Riepilogo finanziario</h2>
+<table>
+<thead>
+<tr>
+<th>Azione</th>
+<th>Risparmio annuo stimato</th>
+<th>CAPEX</th>
+<th>Payback</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Idle (F04+TROV)</td>
+<td>€520</td>
+<td>€0</td>
+<td>Immediato</td>
+</tr>
+<tr>
+<td>Aria compressa</td>
+<td>€15.000-25.000</td>
+<td>€14.000-18.000</td>
+<td>2-3 anni</td>
+</tr>
+<tr>
+<td>Sotto-contatori</td>
+<td>Abilita risparmi successivi</td>
+<td>€5.000</td>
+<td>&lt;1 anno</td>
+</tr>
+<tr>
+<td>FV 250-500 kWp</td>
+<td>€25.000-40.000</td>
+<td>€150.000-210.000</td>
+<td>4-6 (2-3 con T5.0)</td>
+</tr>
+<tr>
+<td>HVAC</td>
+<td>€3.000-8.000</td>
+<td>€0</td>
+<td>Immediato</td>
+</tr>
+<tr>
+<td><strong>Totale</strong></td>
+<td><strong>€43.000-73.000/anno</strong></td>
+<td><strong>€170.000-230.000</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8-prossimi-passi-suggeriti">8. Prossimi passi suggeriti</h2>
+<ol type="1">
+<li><strong>Settimana 1-2</strong>: audit aria compressa (contattare
+fornitore ultrasuoni o specialista).</li>
+<li><strong>Settimana 1</strong>:Procedure di spegnimento F04/TROV a
+fine turno — formare gli addetti.</li>
+<li><strong>Mese 1</strong>: installare 5-10 sotto-contatori su quadri
+generali per mappare il residuo non sotto-misurato.</li>
+<li><strong>Mese 2-3</strong>: avviare iter per FV (visita tecnica,
+studio di fattibilità, domanda Transizione 5.0).</li>
+<li><strong>Prossima revisione</strong>: confrontare effetti interventi
+aria compressa dopo 3 mesi di raccolta dati.</li>
+</ol>
+<hr />
+<p><em>Report generato dal rendiconto energetico 2025-2026 (foglio
+Analisi efficienza). Tutti i valori si riferiscono al contatore generale
+ICO-F500 (copre ~82-85% dei kWh ENEL).</em></p>
+</body>
+</html>

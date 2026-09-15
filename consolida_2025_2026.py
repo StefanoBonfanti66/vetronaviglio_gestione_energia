@@ -74,6 +74,16 @@ from consolida_2026 import (
 INPUT_DIR = Path("input")
 OUTPUT = "rendiconto_2025_2026.xlsx"
 
+# --- Contatori IcoPower con trasmissione interrotta nel 2026 ---
+# Le macchine risultano in produzione (file turni / censimento), ma il contatore
+# cumulativo non aggiorna più da metà maggio 2026: il consumo kWh è SOTTOSTIMATO.
+# Verificata l'attività reale: MG5 46,97h / MG8 20,41h / MG6 133,53h a settembre 2026.
+CONTATORI_INCOMPLETI = {
+    "MG5": "dato incompleto: contatore fermo dal 14/05/2026 (macchina in produzione)",
+    "MG8": "dato incompleto: contatore fermo dal 14/05/2026 (macchina in produzione)",
+    "MG6": "dato incompleto: contatore fermo dall'11/05/2026 (macchina in produzione)",
+}
+
 # --- Mapping nomi 2025 (foglio Tabelle) -> codice canonico ---
 TAB_MAP = {"ASS1 SYCMA": "ASS1", "TMPMA1": "TMPMA2", "TMPM2_TMPMI": "TMPM2_TMPMI"}
 # Codici non-macchina da escludere dagli ODL 2025
@@ -287,6 +297,8 @@ def build_confronto_macchine(cons25: pd.DataFrame, cons26: pd.DataFrame,
             n.append("solo contatore nel 2026")
         if m == "ASS":
             n.append("ASS.POMPE PISCITELLO (attiva solo nel 2025)")
+        if m in CONTATORI_INCOMPLETI:
+            n.append(CONTATORI_INCOMPLETI[m])
         nota.append("; ".join(n))
     df["Nota"] = nota
     df.index.name = "Macchina"
@@ -653,6 +665,7 @@ def _write_note_sheet_2y(ws, cross: dict) -> None:
         "9. Consolidato 2025 approssimativo. Il file 'Dati consumi e costi energetici al 30_11_2025.xlsx' e un elaborato manuale: i totali dei consumi risultano comunque internamente coerenti (somma macchine = totale dichiarato).",
         "10. Contatore generale ICO-F500. Il foglio 'Analisi efficienza' usa il contatore generale, che copre circa l'82-85% dei kWh ENEL fatturati. I dati notte/giorno e idle si riferiscono a questo punto di misura, non ai singoli contatori macchina.",
         "11. Periodo 3-turni. La produzione h24 (3 turni) ha operato dal 29 giugno alla fine di agosto 2026; da settembre si e tornati al turno singolo. Il salto di consumo notturno in LUG/AGO 2026 e interamente spiegato da questo cambio di regime.",
+        "12. Contatori con trasmissione interrotta. MG5 e MG8 (dal 14/05/2026) e MG6 (dall'11/05/2026) risultano in produzione ma il rispettivo contatore IcoPower non aggiorna piu: i kWh 2026 di queste macchine sono SOTTOSTIMATI (l'ultima lettura valida e di maggio). Ore e pezzi restano validi (fonti ProdWare/turni). Dove intervenire: rilevatore/trasmissione dei tre contatori (vedi report Direttore di Produzione).",
     ]:
         para(t)
 
@@ -945,6 +958,10 @@ def main():
     print("5  Fermo 2026...")
     fermo26 = load_fermo_causa("Dettaglio Analisi.xlsx")
     sintesi26 = build_sintesi(cons26, odl26, qta26)
+    for m, msg in CONTATORI_INCOMPLETI.items():
+        if m in sintesi26.index:
+            cur = str(sintesi26.at[m, "Nota"] or "")
+            sintesi26.at[m, "Nota"] = (cur + "; " if cur else "") + msg
 
     print("=== 2025 ===")
     print("6  Consolidato 2025 (Tabelle)...")
