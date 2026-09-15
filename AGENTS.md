@@ -1,6 +1,6 @@
 # AGENTS.md — vetronaviglio_gestione_energia
 
-> Source of truth per regole e note operative del progetto. Ultimo aggiornamento: 2026-09-14.
+> Source of truth per regole e note operative del progetto. Ultimo aggiornamento: 2026-09-15.
 
 ## Descrizione
 Pipeline Python (pandas/openpyxl) che unisce dati IcoPower (kWh per macchina), ProdWare (ODL/quantità), ore lavorate per turno e bollette ENEL in un excel consolidato di rendicontazione energetica e produzione.
@@ -22,17 +22,20 @@ Pipeline Python (pandas/openpyxl) che unisce dati IcoPower (kWh per macchina), P
   - Impatto 3 turni: extra notte ≈ +17.785 kWh / ~€5.300
   - Idle analysis per macchina (GEN-SET 2026): F04 25% idle, TROV 32% idle (top 2)
   - Raccomandazioni prioritarie per Direttore di Produzione
-- **Mancata trasmissione contatori 2026**: MG5/MG8 (fermi dal 14/05/2026) e MG6 (dall'11/05/2026) risultano in produzione per censimento ma kWh SOTTOSTIMATI (contatore non aggiorna). Marcati "dato incompleto: contatore fermo dal 14/05/2026 (macchina in produzione)" in Confronto/Sintesi 2026 e bullet 12 nelle Note di lettura. Report sezione 4 "Rilevazioni contatori da verificare" con punto di misura IcoPower esatto e ultima lettura valida per ciascuna — MG6 priorità (133,5 h a settembre, macchina più attiva dell'area).
-- **Report Direttore di Produzione**: `report_direttore_produzione.md` — sintesi esecutiva con quadro energetico, tabella idle, sezione 4 "Rilevazioni contatori da verificare" (punti di misura IcoPower blocatti), 5 azioni prioritarie con risparmio/CAPEX/payback
+- **Mancata trasmissione contatori 2026**: MG5/MG8 (fermi dal 14/05/2026) e MG6 (dall'11/05/2026) risultano in produzione per censimento ma kWh SOTTOSTIMATI (contatore non aggiorna). Marcati "dato incompleto: contatore fermo dal 14/05/2026 (macchina in produzione)" in Confronto/Sintesi 2026 e bullet 12 nelle Note di lettura. Report sezione 5 "Rilevazioni contatori da verificare" con punto di misura IcoPower esatto e ultima lettura valida per ciascuna — MG6 priorità (133,5 h a settembre, macchina più attiva dell'area).
+- **Profilo giorno vs notte** (sezione 2 report): contatore generale 2026 = 313.144 kWh; NOTTE 22-06 = 36.952 kWh (11,8%), GIORNO 06-22 = 276.193 (88,2%). Decomposizione: baseline servizi sempre-on ~5,4 kW ≈ 10,3%; macchine con contatore ≈ 23,2%; residuo diurno ≈ 66,6% = produzione presso contatore generale senza sotto-misura. Benchmark ACEEE/LBNL (aria compressa 10-11%, nonprocess 15-30%) → Vetronaviglio NELLA NORMA: il "82% servizi" era un malinteso, il grosso del residuo è produzione diurna non attribuita.
+- **Report Direttore di Produzione**: `report_direttore_produzione.md` (+ HTML) — sintesi esecutiva con quadro energetico, profilo giorno/notte (sez. 2), tabella idle (4), rilevazioni contatori (5), 5 azioni prioritarie con risparmio/CAPEX/payback (6)
 - **Bug idle corretto**: computazione ora replica `_analisi_efficienza.py` (kWh = diff contatori cumulativi, potenza kW = kWh/dt_h, soglie su p99 kW, load factor corretto)
+- **Testo rivisto dopo analisi**: rimosso il "82% servizi" fuorviante; sotto-contatori consigliati su macchine senza misura dedicata ad alto carico (residuo ~67% contatore generale)
 
 ### In corso / Da chiudere
-- **Pipeline, report e doc committati** (commit `21b1b51`, push su master OK, working tree pulito)
-- File temporanei di debug (`_analisi_efficienza.py`, `_analisi_ico_f500.py`) cancellati
+- **Commit `0980f75` pushato su master** (rendiconto, report md+html, AGENTS.md)
+- Email a Federico NON inviata (decisione utente: attendere richiesta di riverifica prima di evitare figureccia)
 - Manca bolletta AGO 2026
 
 ### Prossimo step
 - Attendere bolletta AGO 2026 per completare l'anno 2026
+- Sessionare con Federico la riverifica dei contatori bloccati (MG5/MG8/MG6) se richiesto
 - Aggiornare `readme.md` (descrive solo il flusso legacy, non la pipeline 2026)
 
 ## Struttura file
@@ -44,6 +47,7 @@ vetronaviglio_gestione_energia/
 ├── rendiconto_2025_2026.xlsx← OUTPUT principale (14 fogli)
 ├── rendiconto_2026.xlsx     ← output singolo 2026 (legacy)
 ├── report_direttore_produzione.md ← report sintetico per Direttore
+├── report_direttore_produzione.html ← versione HTML print-friendly del report
 ├── PROJECT_AI_NOTES.md      ← decision log e note IA
 ├── input/
 │   ├── CSV Vetronaviglio_2026.csv   ← IcoPower per-macchina (cumulativi 5min)
@@ -53,7 +57,7 @@ vetronaviglio_gestione_energia/
 │   ├── Dettaglio Analisi 2025.xlsx  ← ODL ProdWare (totale periodo)
 │   ├── Dettaglio ore lavorate per turno 2025.xlsx ← ore presenza
 │   └── PDF bollette ENEL 2024-2026
-└── venv/                           ← Python venv (pandas, openpyxl)
+└── venv/                           ← Python venv (pandas, openpyxl) [in realtà .venv]
 ```
 
 ## Note tecniche
