@@ -7,7 +7,7 @@ Pipeline Python (pandas/openpyxl) che unisce dati IcoPower (kWh per macchina), P
 
 ## Current Focus
 
-> **Data:** 2026-09-14
+> **Data:** 2026-09-15
 
 ### Completato
 - **Pipeline completa**: `consolida_2025_2026.py` → `rendiconto_2025_2026.xlsx` (14 fogli)
@@ -26,14 +26,13 @@ Pipeline Python (pandas/openpyxl) che unisce dati IcoPower (kWh per macchina), P
 - **Bug idle corretto**: computazione ora replica `_analisi_efficienza.py` (kWh = diff contatori cumulativi, potenza kW = kWh/dt_h, soglie su p99 kW, load factor corretto)
 
 ### In corso / Da chiudere
-- File temporanei untracked da cancellare: `_scratch_2025.py`, `_analisi_efficienza.py`, `_analisi_ico_f500.py`
-- Tutti i file prodotti sono untracked (nessun commit fatto su questi)
+- **Pipeline, report e doc committati** (commit `21b1b51`, push su master OK, working tree pulito)
+- File temporanei di debug (`_analisi_efficienza.py`, `_analisi_ico_f500.py`) cancellati
 - Manca bolletta AGO 2026
 
 ### Prossimo step
-- Commitare la pipeline consolidata e il report
-- Cancellare file temporanei di debug
 - Attendere bolletta AGO 2026 per completare l'anno 2026
+- Aggiornare `readme.md` (descrive solo il flusso legacy, non la pipeline 2026)
 
 ## Struttura file
 
