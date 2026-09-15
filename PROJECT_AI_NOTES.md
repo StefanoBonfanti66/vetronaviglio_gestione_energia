@@ -39,6 +39,28 @@ Rendicontazione produzione/consumo/energia Vetronaviglio 2026: unire dati IcoPow
 2. **Data VEFI / Qta VEFI vuote**: accettato, si lavora su **totale periodo** (gen→11/09/2026). Se un export futuro include la data, si potrà disaggregare per mese.
 3. **ISOLA2 / ISOLA3**: escludere dal confronto consumi (non misurate nel CSV IcoPower), valgono solo per ore/quantità.
 
+## Sessione 2026-09-14 — Analisi efficienza e report Direttore
+
+### FATTO
+- Creato foglio "Analisi efficienza" (foglio 14 del rendiconto) da dati ICO-F500 contatore generale:
+  - Profilo notte/giorno 2025 vs 2026 con tabelle mensili
+  - Impatto 3 turni: extra notte = 17.785 kWh ≈ €5.300 (baseline 70 kWh/notte vs 388 durante 3-turni)
+  - Idle analysis per macchina (GEN-SET 2026): F04 = 25% idle (1.150 kWh), TROV = 32% idle (593 kWh)
+  - Raccomandazioni prioritarie per Direttore di Produzione
+- Corretto bug computazione idle: ora replica esattamente `_analisi_efficienza.py` (kWh = diff cumulativi, potenza = kWh/dt_h in kW, soglie su p99)
+- Creato `report_direttore_produzione.md`: sintesi esecutiva con quadro energetico, tabella idle, 5 azioni (idle → aria compressa → sotto-contatori → FV → HVAC) con risparmio/CAPEX/payback
+- Aggiornato foglio "Note di lettura" nel rendiconto: aggiunta riga foglio 14, fonte ICO-F500, definizioni regime turni/idle, note su copertura contatori e periodo 3-turni
+- Creato AGENTS.md del progetto (Current Focus, struttura file, note tecniche)
+- Aggiornato PROJECT_AI_NOTES.md con documentazione sessione
+
+### DECISIONE
+- L'analisi efficienza usa **solo** il contatore generale ICO-F500 (~82-85% dei kWh ENEL). I dati notte/giorno e idle NON sono disaggregati per macchina (manca/copertura insufficiente nei contatori per-macchina).
+
+### TODO
+- Commitare la pipeline consolidata, il report e l'AGENTS.md (tutti attualmente untracked)
+- Cancellare file temporanei: `_scratch_2025.py`, `_analisi_efficienza.py`, `_analisi_ico_f500.py`
+- Attendere bolletta AGO 2026 per completare l'anno
+
 ## Prossimo step (lunedì)
 Costruire pipeline di consolizione 2026 → excel finale per macchina con:
 `consumo_kwh` (diff contatori IcoPower, totale periodo) ⨝ `ore_lavo` + `ore_prep` + `ore_fermo_causa` (ODL) ⨝ `pezzi_prodotti` (Qta prodotta) ⨝ `ore_turni` (Dettaglio ore)
