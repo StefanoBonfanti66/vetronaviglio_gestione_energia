@@ -7,9 +7,10 @@ Pipeline Python (pandas/openpyxl) che unisce dati IcoPower (kWh per macchina), P
 
 ## Current Focus
 
-> **Data:** 2026-09-15
+> **Data:** 2026-10-15
 
 ### Completato
+- **Spesa soffiaggio**: `spesa_soffiaggio.py` → `spesa_soffiaggio.xlsx` (4 fogli: Sintesi annua, Mensile 2025, Mensile 2026, Note) per MP2/MG5/MG6/MG7/MG8 su richiesta Rosanna — riusa loader bollette/contatori del rendiconto, tariffe ENEL mensili, caveat contatori fermi e bollette stimate nel foglio Note
 - **Pipeline completa**: `consolida_2025_2026.py` → `rendiconto_2025_2026.xlsx` (14 fogli)
   - Fogli 1-9: tabelle dati 2026 e 2025, confronti e note di lettura
   - Foglio 10: confronti mensili 2026 vs 2025
@@ -32,8 +33,10 @@ Pipeline Python (pandas/openpyxl) che unisce dati IcoPower (kWh per macchina), P
 - **Commit `0980f75` pushato su master** (rendiconto, report md+html, AGENTS.md)
 - Email a Federico NON inviata (decisione utente: attendere richiesta di riverifica prima di evitare figureccia)
 - Manca bolletta AGO 2026
+- **Bozza email a Rosanna pronta ma NON inviata** (spesa soffiaggio; testo nell'ultima sessione, allegato `spesa_soffiaggio.xlsx`)
 
 ### Prossimo step
+- Inviare a mano la bozza email a Rosanna con allegato `spesa_soffiaggio.xlsx` (approvazione Stefano prima dell'invio)
 - Attendere bolletta AGO 2026 per completare l'anno 2026
 - Sessionare con Federico la riverifica dei contatori bloccati (MG5/MG8/MG6) se richiesto
 - Aggiornare `readme.md` (descrive solo il flusso legacy, non la pipeline 2026)
@@ -43,6 +46,8 @@ Pipeline Python (pandas/openpyxl) che unisce dati IcoPower (kWh per macchina), P
 ```
 vetronaviglio_gestione_energia/
 ├── consolida_2025_2026.py   ← script principale (14 fogli output)
+├── spesa_soffiaggio.py      ← spesa mensile/annua macchine soffiaggio (MP2, MG5-MG8)
+├── spesa_soffiaggio.xlsx    ← OUTPUT spesa soffiaggio (4 fogli)
 ├── consolida_2026.py        ← helper importati (config, mapping, stili)
 ├── rendiconto_2025_2026.xlsx← OUTPUT principale (14 fogli)
 ├── rendiconto_2026.xlsx     ← output singolo 2026 (legacy)

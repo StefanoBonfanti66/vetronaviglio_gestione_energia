@@ -70,3 +70,15 @@ Footer mensile: consumo e costo ENEL da bollette (tabella sopra); bolletta AGO 2
 ## Accuratezza dati
 - CSV IcoPower: macchine spente nel periodo (changes=0): F08, F11, MP1, MP3, MP4; quasi spenta F10 (43 changes).
 - `F04` = macchina più energivora (max lettura 113.804,70 kWh).
+
+## Sessione 2026-10-15 — Spesa macchine soffiaggio (richiesta Rosanna)
+
+### FATTO
+- Creato `spesa_soffiaggio.py` → `spesa_soffiaggio.xlsx` (4 fogli: Sintesi annua, Mensile 2025, Mensile 2026, Note) per MP2, MG5, MG6, MG7, MG8
+- Metodo: kWh macchina × €/kWh mensile bolletta ENEL (riuso `load_consumi_2025`, `load_icopower`, `BOLLETTE_2025/2026` di `consolida_2025_2026`)
+- Totali: 2025 (GEN-NOV) = **12.001 €** su 41.531 kWh; 2026 (GEN-SET, al 11/09) = **10.098 €** su 32.112 kWh
+- Per macchina 2026: MP2 4.272 € (↑), MG6 2.161 €, MG7 2.334 €, MG5 511 €, MG8 820 €
+
+### NOTE / LIMITI
+- Bollette AGO/SET 2026 stimate al prezzo medio GEN-LUG (0,3123 €/kWh); FEB/MAR/GIU 2025 stimate come nel rendiconto
+- MG5/MG8/MG6: contatori fermi da metà maggio 2026 → spesa 2026 sottostimata (marcata nel foglio mensile 2026 e nelle Note)
